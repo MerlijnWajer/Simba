@@ -27,7 +27,7 @@ unit os_windows;
 interface
 
   uses
-    Classes, SysUtils, mufasatypes, windows, graphics, LCLType, LCLIntf, bitmaps, IOManager, WinKeyInput;
+    Classes, SysUtils, mufasatypes, windows, graphics, LCLType, LCLIntf, bitmaps, IOManager, WinKeyInput, JwaPsApi;
     
   type
 
@@ -116,6 +116,7 @@ interface
         procedure SetDesktop; override;
         
         function GetProcesses: TSysProcArr; override;
+        function GetProcessMem(processID: LongInt): Int64; override;
         procedure SetTargetEx(Proc: TSysProc); overload;
       protected
         DesktopHWND : Hwnd;
@@ -595,6 +596,23 @@ begin
   SetLength(ProcArr, 0);
   EnumWindows(@EnumProcess, 0);
   Result := ProcArr;
+end;
+
+function TIOManager.GetProcessMem(processID: LongInt): Int64;
+var
+  openHandle: HANDLE;
+  ppsmemCounters: PROCESS_MEMORY_COUNTERS;
+begin
+  openHandle := OpenProcess(PROCESS_QUERY_INFORMATION, false, processID);
+  if openHandle = 0 then
+  begin
+    writeln('GetProcessMem error: ', SysErrorMessage(GetLastOSError()));
+    Exit(-1);
+  end;
+
+  GetProcessMemoryInfo(openHandle, ppsmemCounters, SizeOf(ppsmemCounters));
+  CloseHandle(openHandle);
+  Result := ppsmemCounters.WorkingSetSize;
 end;
 
 procedure TIOManager.SetTargetEx(Proc: TSysProc);

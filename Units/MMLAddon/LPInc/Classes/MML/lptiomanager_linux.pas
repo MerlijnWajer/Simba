@@ -52,6 +52,12 @@ begin
   PSysProcArr(Result)^ := PIOManager(Params^[0])^.GetProcesses();
 end;
 
+//function GetProcessMem(processID: LongInt): Int64; override;
+procedure TIOManager_GetProcessMem(const Params: PParamArray; const Result: Pointer); lape_extdecl
+begin
+  PInt64(Result)^ := PIOManager(Params^[0])^.GetProcessMem(PLongint(Params^[1])^));
+end;
+
 //procedure SetTargetEx(Proc: TSysProc); overload;
 procedure TIOManager_SetTargetEx(const Params: PParamArray); lape_extdecl
 begin
@@ -114,6 +120,7 @@ begin
     addGlobalFunc('function TIOManager.SetTarget(target: TNativeWindow): integer;', @TIOManager_SetTarget);
     addGlobalFunc('procedure TIOManager.SetDesktopAsTarget();', @TIOManager_SetDesktop);
     addGlobalFunc('function TIOManager.GetProcesses(): TSysProcArr;', @TIOManager_GetProcesses);
+    addGlobalFunc('function TIOManager.GetProcessMem(processID: LongInt): Int64;', @TIOManager_GetProcessMem);
     addGlobalFunc('procedure TIOManager.SetTargetEx(Proc: TSysProc);', @TIOManager_SetTargetEx);
     addClassVar('TIOManager', 'display', 'PDisplay', @TIOManager_display_Read, @TIOManager_display_Write);
     addClassVar('TIOManager', 'screennum', 'integer', @TIOManager_screennum_Read, @TIOManager_screennum_Write);

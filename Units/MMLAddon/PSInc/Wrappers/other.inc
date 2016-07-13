@@ -352,6 +352,11 @@ begin
   Result := CurrThread.Client.IOManager.GetProcesses;
 end;
 
+function ps_GetProcessMem(processID: LongInt): Int64;
+begin
+  Result := CurrThread.Client.IOManager.GetProcessMem(processID);
+end;
+
 function ps_GetProcessID : LongInt;
 begin
   Result := GetProcessID;

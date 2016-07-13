@@ -59,6 +59,7 @@ AddGlobalFunc('procedure Simba;', @Lape_Simba);
 AddGlobalFunc('procedure SetClipBoard(const Data: string);', @Lape_SetClipBoard);
 AddGlobalFunc('function GetClipBoard: string', @Lape_GetClipBoard);
 AddGlobalFunc('function GetProcesses: TSysProcArr', @Lape_GetProcesses);
+AddGlobalFunc('function GetProcessMem(processID: LongInt): Int64;', @Lape_GetProcessMem);
 AddGlobalFunc('function GetProcessID : LongInt', @Lape_GetProcessID);
 AddGlobalFunc('procedure SetTarget(Proc: TSysProc);', @Lape_SetTarget);
 AddGlobalFunc('function ExtractFileExt(const FileName: string): string', @Lape_ExtractFileExt);

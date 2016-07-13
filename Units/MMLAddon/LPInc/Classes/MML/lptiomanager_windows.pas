@@ -50,6 +50,12 @@ begin
   PSysProcArr(Result)^ := PIOManager(Params^[0])^.GetProcesses();
 end;
 
+//function GetProcessMem(processID: LongInt): Int64; override;
+procedure TIOManager_GetProcessMem(const Params: PParamArray; const Result: Pointer); lape_extdecl
+begin
+  PInt64(Result)^ := PIOManager(Params^[0])^.GetProcessMem(PLongint(Params^[1])^);
+end;
+
 //procedure SetTargetEx(Proc: TSysProc); overload;
 procedure TIOManager_SetTargetEx(const Params: PParamArray); lape_extdecl
 begin
@@ -75,6 +81,7 @@ begin
     addGlobalFunc('function TIOManager.SetTarget2(target: TNativeWindow): integer;', @TIOManager_SetTarget); //inheritence issue...
     addGlobalFunc('procedure TIOManager.SetDesktop();', @TIOManager_SetDesktop);
     addGlobalFunc('function TIOManager.GetProcesses(): TSysProcArr;', @TIOManager_GetProcesses);
+    addGlobalFunc('function TIOManager.GetProcessMem(processID: LongInt): Int64;', @TIOManager_GetProcessMem);
     addGlobalFunc('procedure TIOManager.SetTargetEx(Proc: TSysProc);', @TIOManager_SetTargetEx);
     addGlobalFunc('procedure TIOManager.Free();', @TIOManager_Free);
   end;

@@ -153,6 +153,11 @@ begin
   PLongInt(Result)^ := ps_GetProcessID();
 end;
 
+procedure Lape_GetProcessMem(const Params : PParamArray; const Result : Pointer); lape_extdecl
+begin
+  PInt64(Result)^ := ps_GetProcessMem(PLongInt(Params^[0])^);
+end;
+
 procedure Lape_GetProcesses(const Params: PParamArray; const Result: Pointer); lape_extdecl
 begin
   PSysProcArr(Result)^ := ps_GetProcesses();
